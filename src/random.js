@@ -11,13 +11,14 @@ export class PRNGRand {
         const regex = new RegExp('[0-9A-F]{64}')
         if (!regex.test(hash)) {
             console.error("Bad hash", hash)
+            throw Error("Bad hash: " + hash)
         }
         this.useA = false;
         let sfc32 = function (uint128Hex) {
-            let a = parseInt(uint128Hex.substr(0, 8), 16);
-            let b = parseInt(uint128Hex.substr(8, 8), 16);
-            let c = parseInt(uint128Hex.substr(16, 8), 16);
-            let d = parseInt(uint128Hex.substr(24, 8), 16);
+            let a = parseInt(uint128Hex.substring(0, 8), 16);
+            let b = parseInt(uint128Hex.substring(8, 8), 16);
+            let c = parseInt(uint128Hex.substring(16, 8), 16);
+            let d = parseInt(uint128Hex.substring(24, 8), 16);
             return function () {
                 a |= 0;
                 b |= 0;
@@ -33,9 +34,9 @@ export class PRNGRand {
             };
         };
         // seed prngA with first half hash
-        this.prngA = new sfc32(hash.substr(2, 32));
+        this.prngA = new sfc32(hash.substring(2, 32));
         // seed prngB with second half of hash
-        this.prngB = new sfc32(hash.substr(34, 32));
+        this.prngB = new sfc32(hash.substring(34, 32));
         for (let i = 0; i < 1e6; i += 2) {
             this.prngA();
             this.prngB();
@@ -52,7 +53,7 @@ export class PRNGRand {
      * @param hi optional upper bound (default 1). When included with lo returns [lo,hi)
      * @returns {number|*}
      */
-    random(lo, hi) {
+    random(lo = undefined, hi = undefined) {
         if (lo === undefined && hi === undefined) return this.grand()
         if (hi === undefined && lo !== undefined) {
             return this.grand() * lo
@@ -87,7 +88,7 @@ export class PRNGRand {
      *
      * Example:
      *
-     * `randomWeighted(new Map([['Low', .1],['Medium', .3],['High', .6]]))`
+     * `randomWeighted(new Map([['Low', .1], ['Medium', .3], ['High', .6]]))`
      *  has a 10% chance of returning 'Low',
      *  a 30% chance of returning 'Medium', and a 60% chance of returning
      *  'High'. Probability values do not need to add up to 1.
