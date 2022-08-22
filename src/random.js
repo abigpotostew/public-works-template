@@ -14,10 +14,10 @@ export class PRNGRand {
         }
         this.useA = false;
         let sfc32 = function (uint128Hex) {
-            let a = parseInt(uint128Hex.substr(0, 8), 16);
-            let b = parseInt(uint128Hex.substr(8, 8), 16);
-            let c = parseInt(uint128Hex.substr(16, 8), 16);
-            let d = parseInt(uint128Hex.substr(24, 8), 16);
+            let a = parseInt(uint128Hex.substring(0, 8), 16);
+            let b = parseInt(uint128Hex.substring(8, 8), 16);
+            let c = parseInt(uint128Hex.substring(16, 8), 16);
+            let d = parseInt(uint128Hex.substring(24, 8), 16);
             return function () {
                 a |= 0;
                 b |= 0;
