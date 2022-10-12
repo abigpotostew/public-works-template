@@ -1,9 +1,6 @@
-import {createPrng, isPWPreview, registerDevEvents, setPreviewReady, setProperties} from "./publicworks";
+import {createPrng, isPWPreview, setPreviewReady, setProperties} from "./publicworks";
 
 const prng = createPrng()
-
-// optionally refresh hash on space bar
-registerDevEvents()
 
 setProperties({
     "Color": prng.randomList(['Blue', 'Purple'])
