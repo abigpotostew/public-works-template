@@ -1,4 +1,3 @@
-import {createPrng, isPWPreview, setPreviewReady, setProperties} from "./publicworks";
 
 const prng = createPrng()
 
